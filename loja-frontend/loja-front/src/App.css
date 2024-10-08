@@ -1,55 +1,162 @@
-/* src/App.css */
-.container {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 20px;
+/* Definindo um estilo base para o body */
+body {
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  background-color: #f4f7fc;
+  color: #333;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
 }
 
-form div {
+/* Estilo global de container */
+.container {
+  max-width: 1200px;
+  width: 100%;
+  padding: 20px;
+  margin: 40px auto;
+  background-color: #fff;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
+  animation: fadeIn 1s ease-in-out;
+}
+
+/* Animação de FadeIn */
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* Títulos */
+h1, h2, h3 {
+  color: #2c3e50;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Estilo dos formulários */
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+input, select, textarea {
+  padding: 12px;
+  border: 2px solid #dfe6e9;
+  border-radius: 6px;
+  font-size: 16px;
+  transition: all 0.3s ease;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: #0984e3;
+  outline: none;
+  box-shadow: 0 0 5px rgba(9, 132, 227, 0.5);
+}
+
+/* Botões */
+button {
+  background-color: #0984e3;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button:hover {
+  background-color: #74b9ff;
+  transform: translateY(-3px);
+}
+
+button:disabled {
+  background-color: #b2bec3;
+  cursor: not-allowed;
+}
+
+/* Estilo da lista de produtos */
+.product-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  margin-top: 40px;
+}
+
+.product-item {
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 20px;
+  box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s ease-in-out;
+  position: relative;
+}
+
+.product-item:hover {
+  transform: translateY(-5px);
+}
+
+.product-item h3 {
+  font-size: 20px;
+  color: #2d3436;
   margin-bottom: 10px;
 }
 
-label {
-  display: block;
-  margin-bottom: 5px;
+.product-item p {
+  font-size: 16px;
+  margin-bottom: 15px;
+  color: #636e72;
 }
 
-input, textarea {
-  width: 100%;
-  padding: 8px;
-  box-sizing: border-box;
+/* Botões de ação na lista de produtos */
+.product-actions {
+  display: flex;
+  justify-content: space-between;
+  position: absolute;
+  bottom: 15px;
+  width: 90%;
 }
 
-button {
-  padding: 8px 12px;
-  margin-right: 5px;
-  cursor: pointer;
+.product-actions button {
+  background-color: #d63031;
+  border-radius: 6px;
 }
 
-table {
-  width: 100%;
-  margin-top: 20px;
-  border-collapse: collapse;
+.product-actions button:hover {
+  background-color: #e17055;
 }
 
-th, td {
-  text-align: left;
-  padding: 10px;
+.product-actions .edit-btn {
+  background-color: #0984e3;
 }
 
-th {
-  background-color: #ff1010;
+.product-actions .edit-btn:hover {
+  background-color: #74b9ff;
 }
 
-tr:nth-child(even) {
-  background-color: #ff0000;
+/* Estilo do gráfico */
+.chart-container {
+  margin-top: 50px;
 }
 
-a {
-  text-decoration: none;
-  color: #007bff;
+.chart-container h3 {
+  text-align: center;
+  margin-bottom: 20px;
+  color: #2c3e50;
 }
 
-a:hover {
-  text-decoration: underline;
+/* Responsividade */
+@media screen and (max-width: 768px) {
+  .container {
+    padding: 10px;
+  }
+
+  .product-actions button {
+    font-size: 14px;
+    padding: 10px;
+  }
 }
