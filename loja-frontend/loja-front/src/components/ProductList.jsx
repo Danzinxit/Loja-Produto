@@ -5,9 +5,15 @@ import { Link } from 'react-router-dom';
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
+  const [categories, setCategories] = useState([]);
+  const [selectedCategory, setSelectedCategory] = useState('');
 
   const fetchProducts = () => {
-    axios.get('http://localhost:5000/products')
+    let url = 'http://localhost:5000/products?_expand=Category';
+    if (selectedCategory) {
+      url += `&categoryId=${selectedCategory}`;
+    }
+    axios.get(url)
       .then(response => {
         setProducts(response.data);
       })
@@ -16,9 +22,23 @@ const ProductList = () => {
       });
   };
 
+  const fetchCategories = () => {
+    axios.get('http://localhost:5000/categories')
+      .then(response => {
+        setCategories(response.data);
+      })
+      .catch(error => {
+        console.error('Erro ao buscar categorias:', error);
+      });
+  };
+
+  useEffect(() => {
+    fetchCategories();
+  }, []);
+
   useEffect(() => {
     fetchProducts();
-  }, []);
+  }, [selectedCategory]);
 
   const handleDelete = (id) => {
     if (window.confirm('Tem certeza que deseja excluir este produto?')) {
@@ -32,14 +52,30 @@ const ProductList = () => {
     }
   };
 
+  const handleCategoryChange = (e) => {
+    setSelectedCategory(e.target.value);
+  };
+
   return (
     <div>
       <h2>Lista de Produtos</h2>
       <Link to="/add">Adicionar Novo Produto</Link>
+      <div style={{ marginTop: '20px', marginBottom: '20px' }}>
+        <label>Filtrar por Categoria: </label>
+        <select value={selectedCategory} onChange={handleCategoryChange}>
+          <option value="">Todas as Categorias</option>
+          {categories.map(category => (
+            <option key={category.id} value={category.id}>
+              {category.name}
+            </option>
+          ))}
+        </select>
+      </div>
       <table border="1" cellPadding="10" cellSpacing="0">
         <thead>
           <tr>
             <th>Nome</th>
+            <th>Categoria</th>
             <th>Preço</th>
             <th>Quantidade</th>
             <th>Ações</th>
@@ -51,6 +87,7 @@ const ProductList = () => {
               <td>
                 <Link to={`/products/${prod.id}`}>{prod.name}</Link>
               </td>
+              <td>{prod.Category ? prod.Category.name : 'Sem Categoria'}</td>
               <td>R$ {prod.price.toFixed(2)}</td>
               <td>{prod.quantity}</td>
               <td>
@@ -67,4 +104,3 @@ const ProductList = () => {
 };
 
 export default ProductList;
-
